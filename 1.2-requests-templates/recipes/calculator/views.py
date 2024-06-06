@@ -30,16 +30,12 @@ DATA = {
 # }
 
 
-def recipes(request, recipe):
+def calculator(request, recipe):
     servings = int(request.GET.get('servings', 1))
     data = DATA.get(recipe)
+    context = {'recipe': {}}
 
-    if servings > 1:
-        for key, value in data.items():
-            data[key] = value * servings
-
-    context = {
-        'recipe': data
-    }
+    for key, value in data.items():
+        context['recipe'][key] = value * servings
 
     return render(request, 'calculator/index.html', context)
