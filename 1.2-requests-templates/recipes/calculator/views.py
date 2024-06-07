@@ -36,6 +36,6 @@ def calculator(request, recipe):
     context = {'recipe': {}}
 
     for key, value in data.items():
-        context['recipe'][key] = value * servings
+        context['recipe'][key] = round(value * servings, 2)
 
     return render(request, 'calculator/index.html', context)
