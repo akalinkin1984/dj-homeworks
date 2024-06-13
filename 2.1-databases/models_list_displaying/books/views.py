@@ -5,37 +5,28 @@ from .models import Book
 
 
 def books_view(request):
+    page_number = int(request.GET.get('page', 1))
     template = 'books/books_list.html'
     books = Book.objects.all()
-    context = {'books': books}
-    # print(type(str(books[0].pub_date)))
+    paginator = Paginator(books, 3)
+    page = paginator.get_page(page_number)
+    context = {'books': page}
+
     return render(request, template, context)
 
 
 def show_book(request, pub_date):
     template = 'base.html'
     books = Book.objects.filter(pub_date=pub_date).all()
+    # date = pub_date.strftime('%Y-%m-%d')
 
-    current_page = 'books/' + str(pub_date)
-    paginator = Paginator(books, 10)
-    page = paginator.get_page(current_page)
-
-    # prev_date = Book.objects.filter(pub_date__lt=pub_date).first()
-    try:
-        prev_date = Book.objects.filter(pub_date__lt=pub_date).first()
-    except:
-        prev_date = None
-
-
-    # next_date = Book.objects.filter(pub_date__gt=pub_date).first()
-    try:
-        next_date = Book.objects.filter(pub_date__gt=pub_date).first()
-    except:
-        next_date = None
+    prev_date = Book.objects.filter(pub_date__lt=pub_date).first()
+    next_date = Book.objects.filter(pub_date__gt=pub_date).first()
 
     context = {
-        'books': page,
+        'books': books,
         'prev_date': prev_date,
         'next_date': next_date
             }
+
     return render(request, template, context)

@@ -24,12 +24,18 @@
             {% for book in books %}
             <div class="book col-md-4">
                 <h2>
-                    <a href="http://127.0.0.1:8000/books/{{ book.pub_date }}/">{{ book.name }}</a>
+                    <a href="{{ book.pub_date }}/">{{ book.name }}</a>
                 </h2>
                 <p>Автор: {{ book.author }} </p>
-                <p>Дата публикации: {{ book.pub_date }} </p>
+                <p>Дата публикации: {{ book.pub_date|slugify }} </p>
             </div>
             {% endfor %}
+            {% if books.has_previous %}
+            <a href='?page={{ books.previous_page_number }}'>Назад</a>
+            {% endif %}
+            {% if books.has_next %}
+            <a href='?page={{ books.next_page_number }}'>Вперед</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

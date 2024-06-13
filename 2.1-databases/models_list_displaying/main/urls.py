@@ -16,8 +16,7 @@ Including another URLconf
 from datetime import datetime
 
 from django.contrib import admin
-from django.urls import path
-from django.urls import register_converter
+from django.urls import path, register_converter
 
 from books.views import books_view, show_book
 
@@ -38,6 +37,6 @@ register_converter(DateConverter, 'date')
 
 urlpatterns = [
     path('books/', books_view, name='books'),
-    path('books/<date:pub_date>/', show_book, name='show_book'),
+    path('books/<pub_date>/', show_book, name='show_book'),
     path('admin/', admin.site.urls),
 ]
