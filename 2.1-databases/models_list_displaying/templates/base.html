@@ -13,7 +13,28 @@
   </head>
 
   <body>
-    {% block content %}{% endblock %}
+    {% block content %}
+    <div class="container">
+        <div class="header">
+            <h1><a href="/books">Каталог</a></h1>
+        </div>
+      <div class="row">
+            {% for book in books %}
+            <div class="book col-md-4">
+                <h2> {{ book.name }} </h2>
+                <p>Автор: {{ book.author }} </p>
+                <p>Дата публикации: {{ book.pub_date }} </p>
+            </div>
+            {% endfor %}
+        </div>
+        {% if prev_date %}
+            <a href="http://127.0.0.1:8000/books/{{ prev_date.pub_date }}/">< {{ prev_date.pub_date }}</a>
+        {% endif %}
+        {% if next_date %}
+            <a href="http://127.0.0.1:8000/books/{{ next_date.pub_date }}/"> {{ next_date.pub_date }} ></a>
+        {% endif %}
+    </div>
+    {% endblock %}
 
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
