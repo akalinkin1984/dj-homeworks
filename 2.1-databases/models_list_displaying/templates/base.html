@@ -23,13 +23,14 @@
             <div class="book col-md-4">
                 <h2> {{ book.name }} </h2>
                 <p>Автор: {{ book.author }} </p>
-                <p>Дата публикации: {{ book.pub_date|slugify }} </p>
+                <p>Дата публикации: {{ book.pub_date }} </p>
             </div>
             {% endfor %}
-        </div>
+      </div>
         {% if prev_date %}
             <a href="http://127.0.0.1:8000/books/{{ prev_date.pub_date|slugify }}/">< {{ prev_date.pub_date|slugify }}</a>
         {% endif %}
+
         {% if next_date %}
             <a href="http://127.0.0.1:8000/books/{{ next_date.pub_date|slugify }}/"> {{ next_date.pub_date|slugify }} ></a>
         {% endif %}
