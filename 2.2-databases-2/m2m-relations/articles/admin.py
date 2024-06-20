@@ -22,7 +22,7 @@ class ScopeInlineFormset(BaseInlineFormSet):
 class ScopeInline(admin.TabularInline):
     model = Scope
     formset = ScopeInlineFormset
-    extra = 3
+    extra = 1
 
 
 @admin.register(Article)
