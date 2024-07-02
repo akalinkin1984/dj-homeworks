@@ -14,4 +14,4 @@ class GetCreateSensor(ListAPIView, CreateAPIView):
 
 class UpdateSensor(RetrieveUpdateAPIView, pk):
     queryset = Sensor.objects.filter(id=pk)
-    
+
