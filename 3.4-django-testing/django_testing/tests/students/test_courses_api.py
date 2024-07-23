@@ -92,23 +92,21 @@ def test_create_course(client):
 def test_update_course(client, course_factory):
     course = course_factory(_quantity=1)
     new_data = {'name': 'new course'}
-    url = reverse('courses-list')
-    print(url)
-    response = client.patch(url + f'{course[0].id}', data=new_data)
+    url = reverse('courses-detail', args=[course[0].id])
+
+    response = client.patch(url, data=new_data)
     data = response.json()
 
-    assert response.status_code == 301
-    assert data[0]['name'] == course[0].name
+    assert response.status_code == 200
+    assert data['name'] == new_data['name']
 
 
-# @pytest.mark.django_db
-# def test_delete_course(client, course_factory):
-#     course = course_factory(_quantity=1)
-#     new_data = {'name': 'new course'}
-#     url = reverse('courses-list')
-#
-#     response = client.patch(url + f'/{course[0].id}/', data=new_data)
-#     data = response.json()
-#
-#     assert response.status_code == 204
-#     assert data[0]['name'] == course[0].name
+@pytest.mark.django_db
+def test_delete_course(client, course_factory):
+    course = course_factory(_quantity=1)
+    url = reverse('courses-detail', args=[course[0].id])
+
+    response = client.delete(url)
+
+    assert response.status_code == 204
+    assert len(Course.objects.all()) == 0
